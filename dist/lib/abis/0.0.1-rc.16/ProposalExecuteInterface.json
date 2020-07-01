@@ -1,0 +1,28 @@
+{
+    "constractName": "ProposalExecuteInterface",
+    "abi": [
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_proposalId",
+                    "type": "bytes32"
+                },
+                {
+                    "name": "_decision",
+                    "type": "int256"
+                }
+            ],
+            "name": "executeProposal",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        }
+    ]
+}
