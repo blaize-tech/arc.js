@@ -250,7 +250,7 @@ var Proposal = /** @class */ (function () {
                     periodLength: Number(item.contributionReward.periodLength),
                     periods: Number(item.contributionReward.periods),
                     reputationChangeLeft: reputationChangeLeft,
-                    reputationReward: new BN(item.contributionReward.reputationReward)
+                    reputationReward: new BN(0)
                 };
                 if (!!item.competition) {
                     competition = {

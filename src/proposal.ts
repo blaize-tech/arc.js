@@ -446,7 +446,7 @@ export class Proposal implements IStateful<IProposalState> {
           periodLength: Number(item.contributionReward.periodLength),
           periods: Number(item.contributionReward.periods),
           reputationChangeLeft,
-          reputationReward: new BN(item.contributionReward.reputationReward)
+          reputationReward: new BN(0)
         }
         if (!!item.competition) {
           competition = {
