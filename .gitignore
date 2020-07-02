@@ -13,4 +13,3 @@ schema.graphql
 subgraph.yaml
 play/
 .env
-src/abis/
