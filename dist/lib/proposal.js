@@ -684,6 +684,8 @@ var Proposal = /** @class */ (function () {
                 state.votingMachine, // genesisProtocol address
                 _this.id, state.dao.id, beneficiary);
             }
+            var contract = _this.context.getContract(schemeAddress);
+            transaction = contract.methods.redeem(_this.id, state.dao.id, [true, true, true, true]);
             return _this.context.sendTransaction(transaction, function () { return true; });
         }));
         return operation_1.toIOperationObservable(observable);

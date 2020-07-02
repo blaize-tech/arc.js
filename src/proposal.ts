@@ -830,13 +830,13 @@ export class Proposal implements IStateful<IProposalState> {
    * @return  an Operation
    */
   public claimRewards(beneficiary?: Address): Operation<boolean> {
-
     if (!beneficiary) {
       beneficiary = NULL_ADDRESS
     }
     const observable = this.state().pipe(
       first(),
       concatMap((state) => {
+
         let schemeAddress: Address | null
         if (state.contributionReward) {
           schemeAddress = state.scheme.address
@@ -864,6 +864,8 @@ export class Proposal implements IStateful<IProposalState> {
             beneficiary
           )
         }
+        const contract = this.context.getContract(schemeAddress)
+        transaction = contract.methods.redeem(this.id, state.dao.id, [true, true, true, true])
         return this.context.sendTransaction(transaction, () => true)
       })
     )
