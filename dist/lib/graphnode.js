@@ -30,6 +30,7 @@ var rxjs_1 = require("rxjs");
 var operators_1 = require("rxjs/operators");
 var logger_1 = require("./logger");
 var utils_1 = require("./utils");
+var subscriptions_transport_ws_1 = require("subscriptions-transport-ws");
 function createApolloClient(options) {
     var httpLink = new apollo_link_http_1.HttpLink({
         credentials: 'same-origin',
@@ -233,6 +234,14 @@ var GraphNodeObserver = /** @class */ (function () {
         observable.first = function () { return observable.pipe(operators_1.first()).toPromise(); };
         return observable;
     };
+    GraphNodeObserver.prototype.lockingSgt4Reputation = function (callback) {
+        var wsclient = new subscriptions_transport_ws_1.SubscriptionClient(this.graphqlWsProvider || '', {
+            reconnect: true,
+        });
+        wsclient.request({
+            query: graphql_tag_1.default(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n        subscription{\n            lockingSGT4Reputations{\n              id\n              count\n              sender\n              _amount\n            }\n          }\n        "], ["\n        subscription{\n            lockingSGT4Reputations{\n              id\n              count\n              sender\n              _amount\n            }\n          }\n        "]))) // Don't forget to check for an `errors` property in the next() handler
+        }).subscribe({ next: callback, error: console.error });
+    };
     /**
      * Returns an observable that:
      * - sends a query over http and returns the current list of results
@@ -322,5 +331,5 @@ var GraphNodeObserver = /** @class */ (function () {
     return GraphNodeObserver;
 }());
 exports.GraphNodeObserver = GraphNodeObserver;
-var templateObject_1, templateObject_2;
+var templateObject_1, templateObject_2, templateObject_3;
 //# sourceMappingURL=graphnode.js.map

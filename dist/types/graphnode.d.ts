@@ -40,6 +40,7 @@ export declare class GraphNodeObserver {
      * @return an Observable that will first yield the current result, and yields updates every time the data changes
      */
     getObservable(query: any, apolloQueryOptions?: IApolloQueryOptions): any;
+    lockingSgt4Reputation(callback: any): void;
     /**
      * Returns an observable that:
      * - sends a query over http and returns the current list of results

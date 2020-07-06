@@ -13,6 +13,9 @@ import { Observable, Observer } from 'rxjs'
 import { catchError, filter, first, map } from 'rxjs/operators'
 import { Logger } from './logger'
 import { zenToRxjsObservable } from './utils'
+import { SubscriptionClient } from 'subscriptions-transport-ws';
+
+
 
 export interface IApolloQueryOptions {
   fetchPolicy?: 'cache-first' | 'network-only' | 'cache-only' | 'no-cache' | 'standby',
@@ -264,6 +267,27 @@ export class GraphNodeObserver {
     })
     observable.first = () => observable.pipe(first()).toPromise()
     return observable
+  }
+
+  public lockingSgt4Reputation(callback: any) {
+    const wsclient = new SubscriptionClient(
+        this.graphqlWsProvider || '',
+        {
+            reconnect: true,
+        }
+      );
+      wsclient.request({
+        query: gql`
+        subscription{
+            lockingSGT4Reputations{
+              id
+              count
+              sender
+              _amount
+            }
+          }
+        `            // Don't forget to check for an `errors` property in the next() handler
+      }).subscribe({next: callback, error: console.error})
   }
 
   /**
