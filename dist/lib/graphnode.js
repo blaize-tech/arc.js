@@ -160,6 +160,9 @@ var GraphNodeObserver = /** @class */ (function () {
             this.graphqlHttpProvider = options.graphqlHttpProvider;
             this.graphqlWsProvider = options.graphqlWsProvider;
             this.apolloClient = createApolloClient(__assign(__assign({}, options), { graphqlHttpProvider: this.graphqlHttpProvider, graphqlWsProvider: this.graphqlWsProvider }));
+            this.wsclient = new subscriptions_transport_ws_1.SubscriptionClient(this.graphqlWsProvider || '', {
+                reconnect: true,
+            });
         }
     }
     /**
@@ -235,10 +238,7 @@ var GraphNodeObserver = /** @class */ (function () {
         return observable;
     };
     GraphNodeObserver.prototype.lockingSgt4Reputation = function (callback) {
-        var wsclient = new subscriptions_transport_ws_1.SubscriptionClient(this.graphqlWsProvider || '', {
-            reconnect: true,
-        });
-        wsclient.request({
+        this.wsclient.request({
             query: graphql_tag_1.default(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n        subscription{\n            lockingSGT4Reputations{\n              id\n              count\n              sender\n              _amount\n            }\n          }\n        "], ["\n        subscription{\n            lockingSGT4Reputations{\n              id\n              count\n              sender\n              _amount\n            }\n          }\n        "]))) // Don't forget to check for an `errors` property in the next() handler
         }).subscribe({ next: callback, error: console.error });
     };

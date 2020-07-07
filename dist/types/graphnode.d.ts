@@ -25,6 +25,7 @@ export declare class GraphNodeObserver {
     Logger: import("js-logger/src/types").GlobalLogger;
     apolloClient?: ApolloClient<object>;
     graphqlSubscribeToQueries?: boolean;
+    wsclient?: any;
     constructor(options: {
         graphqlHttpProvider?: string;
         graphqlWsProvider?: string;

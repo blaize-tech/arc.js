@@ -160,6 +160,7 @@ export class GraphNodeObserver {
   public Logger = Logger
   public apolloClient?: ApolloClient<object>
   public graphqlSubscribeToQueries?: boolean
+  public wsclient?: any
 
   constructor(options: {
     graphqlHttpProvider?: string
@@ -180,6 +181,12 @@ export class GraphNodeObserver {
         graphqlHttpProvider: this.graphqlHttpProvider as string,
         graphqlWsProvider: this.graphqlWsProvider as string
       })
+      this.wsclient = new SubscriptionClient(
+        this.graphqlWsProvider || '',
+        {
+            reconnect: true,
+        }
+      )
     }
   }
 
@@ -270,13 +277,7 @@ export class GraphNodeObserver {
   }
 
   public lockingSgt4Reputation(callback: any) {
-    const wsclient = new SubscriptionClient(
-        this.graphqlWsProvider || '',
-        {
-            reconnect: true,
-        }
-      );
-      wsclient.request({
+      this.wsclient.request({
         query: gql`
         subscription{
             lockingSGT4Reputations{
